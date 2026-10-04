@@ -1,0 +1,20 @@
+name: Import from Labyrinth
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Labyrinth (full history)
+        run: git clone https://github.com/Skalagrimmo/Labyrinth.git source
+
+      - name: Force-push Labyrinth history to Netcrawler main
+        run: |
+          cd source
+          git push --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Skalagrimmo/Netcrawler.git" HEAD:main
